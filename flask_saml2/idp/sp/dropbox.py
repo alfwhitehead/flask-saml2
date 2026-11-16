@@ -34,4 +34,4 @@ class DropboxSPHandler(SPHandler):
         """
         if request.destination != '':
             raise CannotHandleAssertion(
-                f'Destination expected to be the empty string for Dropbox Service Provider')
+                'Destination expected to be the empty string for Dropbox Service Provider')

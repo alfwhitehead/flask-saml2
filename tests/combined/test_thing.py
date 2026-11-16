@@ -30,8 +30,9 @@ class TestEndToEnd(SamlTestCase):
             sp_login_idp_url = url_for(
                 'flask_saml2_sp.login_idp',
                 entity_id='http://idp.example.com/saml/metadata.xml',
-                next=login_next, _external=True)
+                next=login_next, _external=False)
             assert response.status_code == 302
+            # Werkzeug >= 2.1 no longer rewrites relative Location headers
             assert response.headers['Location'] == sp_login_idp_url
 
             # Lets fetch that...

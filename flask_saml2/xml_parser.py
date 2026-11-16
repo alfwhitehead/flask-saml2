@@ -8,7 +8,8 @@ from typing import Iterable, Optional
 
 import defusedxml.lxml
 import lxml.etree
-from signxml import XMLVerifier
+from signxml import (
+    DigestAlgorithm, SignatureConfiguration, SignatureMethod, XMLVerifier)
 
 from flask_saml2.types import X509, XmlNode
 from flask_saml2.xml_templates import NAMESPACE_MAP
@@ -27,16 +28,29 @@ class XmlParser:
     #: The certificate the document is signed with
     certificate: Optional[X509] = None
 
-    def __init__(self, xml_string: str, certificate: Optional[X509]):
+    #: Accept documents signed with SHA-1 based algorithms.
+    #: SHA-1 is deprecated and rejected unless this is enabled.
+    allow_sha1: bool = False
+
+    def __init__(
+        self,
+        xml_string: str,
+        certificate: Optional[X509],
+        *,
+        allow_sha1: bool = False,
+    ):
         """
         :param xml_string: The XML string to parse
         :param x509cert: A preshared X509 certificate to validate the signed
            XML document with
+        :param allow_sha1: Accept documents signed using SHA-1.
+           Only enable this for legacy partners that can not use SHA-256.
         """
         self._logger = logging.getLogger(__name__)
 
         if certificate is not None:
             self.certificate = certificate
+        self.allow_sha1 = allow_sha1
 
         self.xml_string = xml_string
         self.xml_tree = self.parse_request(xml_string)
@@ -70,7 +84,23 @@ class XmlParser:
         the certificate provided in the request. This is INSECURE and
         more-or-less only useful for testing.
         """
-        return XMLVerifier().verify(xml_tree, x509_cert=certificate).signed_xml
+        return XMLVerifier().verify(
+            xml_tree,
+            x509_cert=certificate,
+            expect_config=self.get_signature_configuration(),
+        ).signed_xml
+
+    def get_signature_configuration(self) -> SignatureConfiguration:
+        """The signature algorithms accepted when verifying a signed document.
+        Uses the signxml defaults, plus SHA-1 if :attr:`allow_sha1` is set.
+        """
+        config = SignatureConfiguration()
+        if self.allow_sha1:
+            config = SignatureConfiguration(
+                signature_methods=config.signature_methods | {SignatureMethod.RSA_SHA1},
+                digest_algorithms=config.digest_algorithms | {DigestAlgorithm.SHA1},
+            )
+        return config
 
     def _xpath_xml_tree(self, xpath_statement):
         return self._xpath(self.xml_tree, xpath_statement)

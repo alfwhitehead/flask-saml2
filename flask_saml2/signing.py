@@ -104,7 +104,7 @@ class RsaSha1Signer(Signer):
         signature = priv.sign(
             data,
             padding.PKCS1v15(),
-            hashes.SHA1(),   
+            hashes.SHA1(),
         )
         data = signature
         return base64.b64encode(data).decode('ascii')
