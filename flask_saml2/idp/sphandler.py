@@ -34,6 +34,11 @@ class SPHandler(object):
     # If the Service Provider uses the <AuthnRequest> Destination attribute
     require_destination = True
 
+    #: Accept requests from this Service Provider signed using SHA-1.
+    #: SHA-1 is deprecated, so this is off by default.
+    #: Only enable it for Service Providers that can not use SHA-256.
+    allow_sha1: bool = False
+
     def __init__(
         self, idp,
         *,
@@ -219,7 +224,7 @@ class SPHandler(object):
                 raise CannotHandleAssertion(
                     f'Destination mismatch {self.idp.get_sso_url()} != {request.destination}')
         elif self.require_destination:
-            raise CannotHandleAssertion(f'No <AuthnRequest> Destination attribute set')
+            raise CannotHandleAssertion('No <AuthnRequest> Destination attribute set')
 
     def validate_entity_id(self, request: AuthnRequestParser):
         """
@@ -255,13 +260,15 @@ class SPHandler(object):
         """Get a :class:`~.request.AuthnRequestParser` to handle this request."""
         return AuthnRequestParser(
             self.decode_saml_string(saml_request),
-            certificate=self.certificate)
+            certificate=self.certificate,
+            allow_sha1=self.allow_sha1)
 
     def parse_logout_request(self, saml_request) -> LogoutRequestParser:
         """Get a :class:`~.request.LogoutRequestParser` to handle this request."""
         return LogoutRequestParser(
             self.decode_saml_string(saml_request),
-            certificate=self.certificate)
+            certificate=self.certificate,
+            allow_sha1=self.allow_sha1)
 
     def make_response(self, request) -> XmlTemplate:
         """

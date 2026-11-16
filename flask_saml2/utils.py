@@ -80,7 +80,7 @@ def get_random_id() -> str:
 
 def utcnow() -> datetime.datetime:
     """Get the current time in UTC, as an aware :class:`datetime.datetime`."""
-    return datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
+    return datetime.datetime.now(pytz.utc)
 
 
 def certificate_to_string(certificate: TS.X509) -> str:

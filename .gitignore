@@ -3,7 +3,7 @@
 *.log
 
 *.egg-info/
-*.tox/
+
 
 .idea
 .env
@@ -16,3 +16,6 @@ build/
 dist/
 .pytest_cache/
 docs/build/
+
+# uv
+.venv/

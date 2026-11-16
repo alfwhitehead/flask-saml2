@@ -16,16 +16,15 @@ from .base import (
 
 X509_CERTIFICATE_DATA = """
 -----BEGIN CERTIFICATE-----
-MIICKzCCAdWgAwIBAgIJAM8DxRNtPj90MA0GCSqGSIb3DQEBBQUAMEUxCzAJBgNVBAYTAkFVMRMwEQYD
-VQQIEwpTb21lLVN0YXRlMSEwHwYDVQQKExhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQwHhcNMTEwODEy
-MjA1MTIzWhcNMTIwODExMjA1MTIzWjBFMQswCQYDVQQGEwJBVTETMBEGA1UECBMKU29tZS1TdGF0ZTEh
-MB8GA1UEChMYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANcN
-mgm4YlSUAr2xdWei5aRU/DbWtsQ47gjkv28Ekje3ob+6q0M+D5phwYDcv9ygYmuJ5wOi1cPprsWdFWmv
-SusCAwEAAaOBpzCBpDAdBgNVHQ4EFgQUzyBR9+vE8bygqvD6CZ/w6aQPikMwdQYDVR0jBG4wbIAUzyBR
-9+vE8bygqvD6CZ/w6aQPikOhSaRHMEUxCzAJBgNVBAYTAkFVMRMwEQYDVQQIEwpTb21lLVN0YXRlMSEw
-HwYDVQQKExhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGSCCQDPA8UTbT4/dDAMBgNVHRMEBTADAQH/MA0G
-CSqGSIb3DQEBBQUAA0EAIQuPLA/mlMJAMF680kL7reX5WgyRwAtRzJK6FgNjE7kRaLZQ79UKYVYa0VAy
-rRdoNEyVhG4tJFEiQJzaLWsl/A==
+MIIBozCCAU2gAwIBAgIUUbyvzVQwWQQjPeJxo3k3KDqPoSswDQYJKoZIhvcNAQEL
+BQAwRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM
+GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAgFw0wMDAxMDEwMDAwMDBaGA8yMTAw
+MDEwMTAwMDAwMFowRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUx
+ITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDBcMA0GCSqGSIb3DQEB
+AQUAA0sAMEgCQQDXDZoJuGJUlAK9sXVnouWkVPw21rbEOO4I5L9vBJI3t6G/uqtD
+Pg+aYcGA3L/coGJriecDotXD6a7FnRVpr0rrAgMBAAGjEzARMA8GA1UdEwEB/wQF
+MAMBAf8wDQYJKoZIhvcNAQELBQADQQBMizazXQYy2TlJ5znSn+PClqiwMVe3SNd4
+m6gEyDT9wBPaHPdzGTlP0Td5VG0RUZK2ZNJIrREvzNwdefawo004
 -----END CERTIFICATE-----
 """.strip()
 X509_CERTIFICATE_INLINE = ''.join(X509_CERTIFICATE_DATA.splitlines()[1:-1])
@@ -142,7 +141,7 @@ RESPONSE_WITH_SIGNED_ASSERTION_SALESFORCE_XML = (
 SIGNED_RESPONSE_WITH_SIGNED_ASSERTION_SALESFORCE_XML = (
     f'<samlp:Response xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" Destination="{ACS_URL}" ID="{RESPONSE_ID}" InResponseTo="{REQUEST_ID}" IssueInstant="2011-08-11T23:38:34Z" Version="2.0">'
     f'<saml:Issuer xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">{IDP_ISSUER}</saml:Issuer>'
-    f'<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:CanonicalizationMethod><ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></ds:SignatureMethod><ds:Reference URI="#{RESPONSE_ID}"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></ds:Transform><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></ds:DigestMethod><ds:DigestValue>sxi1OztMxi2taVoT3kxaVXQrVx4=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>tErJwi7CBpFWXQRKxEcpkoNZKDv2D1D1hBOlEWWYOyrU5eGaaLFrQ/dMA3D7S0lGjGEf7YkkgiZOAE4dKVHhUg==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>{X509_CERTIFICATE_INLINE}</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature>'
+    f'<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:CanonicalizationMethod><ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></ds:SignatureMethod><ds:Reference URI="#{RESPONSE_ID}"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></ds:Transform><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></ds:DigestMethod><ds:DigestValue>+UIhF0QnH3SwqVz6tz0PGvlmhkU=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>a1qjfWU184aCY+z32cyZPI+826T5xVb0jA0sf8oF8MvPeFoWdWK5mjJ51E6qi0CnYBARsudRWKgBIvu80yAJpw==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>{X509_CERTIFICATE_INLINE}</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature>'
     f'<samlp:Status><samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"></samlp:StatusCode></samlp:Status>'
     f'<saml:Assertion xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="{ASSERTION_ID}" IssueInstant="2011-08-11T23:38:34Z" Version="2.0"><saml:Issuer>{IDP_ISSUER}</saml:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:CanonicalizationMethod><ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></ds:SignatureMethod><ds:Reference URI="#{ASSERTION_ID}"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></ds:Transform><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></ds:DigestMethod><ds:DigestValue>b7HwOJQgKYvhWcrUH17T8WXTY24=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>WP+9aFiuj52WLW6ebwSaQhF2nU/wtyP3E2dudTa6mVTSjItpqduUqWR3rp/q39Hsehde6i+4RlbGQkZUwZSPEw==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>{X509_CERTIFICATE_INLINE}</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml:Subject><saml:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:email" SPNameQualifier="example.net">randomuser@example.com</saml:NameID><saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"><saml:SubjectConfirmationData InResponseTo="{REQUEST_ID}" NotOnOrAfter="2011-08-11T23:43:34Z" Recipient="{ACS_URL}"></saml:SubjectConfirmationData></saml:SubjectConfirmation></saml:Subject><saml:Conditions NotBefore="2011-08-11T23:38:04Z" NotOnOrAfter="2011-08-11T23:43:34Z"><saml:AudienceRestriction><saml:Audience>example.net</saml:Audience></saml:AudienceRestriction></saml:Conditions><saml:AuthnStatement AuthnInstant="2011-08-11T23:38:34Z"><saml:AuthnContext><saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:Password</saml:AuthnContextClassRef></saml:AuthnContext></saml:AuthnStatement></saml:Assertion>'
     f'</samlp:Response>'

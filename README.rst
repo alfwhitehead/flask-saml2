@@ -6,8 +6,8 @@ flask-saml2
     but I no longer work on the project this was built for. If you are interested in taking over leadership
     and maintenance of this project, please get in touch.
 
-.. image:: https://travis-ci.com/timheap/flask-saml2.svg?branch=master
-    :target: https://travis-ci.com/timheap/flask-saml2
+.. image:: https://github.com/timheap/flask-saml2/actions/workflows/ci.yml/badge.svg
+    :target: https://github.com/timheap/flask-saml2/actions/workflows/ci.yml
 .. image:: https://badge.fury.io/py/flask-saml2.svg
     :target: https://pypi.org/project/flask-saml2/
 .. image:: https://readthedocs.org/projects/flask-saml2/badge/?version=latest
@@ -48,30 +48,23 @@ Example implementations
 A minimal but functional example implementation of both a Service Provider and
 an Identity Provider can be found in the ``examples/`` directory of this
 repository. To get the examples running, first clone the repository and install
-the dependencies:
+the dependencies with `uv <https://docs.astral.sh/uv/>`_:
 
 .. code-block:: console
 
     $ git clone https://github.com/timheap/flask-saml2
     $ cd flask-saml2
-    $ python3 -m venv venv
-    $ source venv/bin/activate
-    $ pip install -e .
-    $ pip install -r tests/requirements.txt
+    $ uv sync
 
 Next, run the IdP and the SP in separate terminal windows:
 
 .. code-block:: console
 
-    $ cd flask-saml2
-    $ source venv/bin/activate
-    $ ./examples/idp.py
+    $ uv run examples/idp.py
 
 .. code-block:: console
 
-    $ cd flask-saml2
-    $ source venv/bin/activate
-    $ ./examples/sp.py
+    $ uv run examples/sp.py
 
 Finally, navigate to http://localhost:9000/ to access the Service Provider
 landing page.
@@ -79,12 +72,20 @@ landing page.
 Testing
 -------
 
-The test runner is `pytest` and we are using `tox` to run tests against
-different versions of Flask and Python. The test can be run locally using
-`tox` directly (preferably in a virtual environment)::
+The test runner is `pytest`. Dependencies are managed with
+`uv <https://docs.astral.sh/uv/>`_::
 
-    $ pip install tox
-    $ tox
+    $ uv run pytest
+    $ uv run flake8 flask_saml2 tests examples
+    $ uv run isort --check-only flask_saml2 tests examples
+
+To run the tests against a specific Python version::
+
+    $ uv run --python 3.12 pytest
+
+Build the documentation with::
+
+    $ uv run --group docs make -C docs html
 
 License
 -------

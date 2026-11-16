@@ -65,6 +65,11 @@ class IdPHandler:
     """
     entity_id: str
     display_name: Optional[str] = None
+
+    #: Accept responses from this Identity Provider signed using SHA-1.
+    #: SHA-1 is deprecated, so this is off by default.
+    #: Only enable it for Identity Providers that can not use SHA-256.
+    allow_sha1: bool = False
     certificate: Optional[X509] = None
 
     def __init__(
@@ -219,7 +224,8 @@ class IdPHandler:
         """
         return ResponseParser(
             self.decode_saml_string(saml_response),
-            certificate=self.certificate)
+            certificate=self.certificate,
+            allow_sha1=self.allow_sha1)
 
     def get_auth_data(self, response: ResponseParser) -> AuthData:
         """

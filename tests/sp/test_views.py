@@ -76,7 +76,8 @@ class TestLoginSingleIdP(SamlTestCase):
         login_url = url_for(
             'flask_saml2_sp.login_idp',
             entity_id='https://idp.example.com/saml/metadata.xml',
-            _external=True)
+            _external=False)
+        # Werkzeug >= 2.1 no longer rewrites relative Location headers
         assert response.status_code == 302
         assert response.headers['Location'] == login_url
 

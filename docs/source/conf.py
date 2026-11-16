@@ -1,5 +1,3 @@
-import sphinx_rtd_theme
-
 import flask_saml2.version
 
 project = 'Flask SAML2 IdP and SP'
@@ -36,8 +34,8 @@ pygments_style = 'sphinx'
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    "python": ("https://docs.python.org/3.7", None),
-    "flask": ("https://flask.palletsprojects.com/en/1.1.x", None),
+    "python": ("https://docs.python.org/3", None),
+    "flask": ("https://flask.palletsprojects.com/en/stable/", None),
     "OpenSSL": ("https://www.pyopenssl.org/en/stable/", None),
 }
 
@@ -47,7 +45,6 @@ nitpick_ignore = [
 
 # -- Options for HTML output ----------------------------------------------
 html_theme = 'sphinx_rtd_theme'
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_static_path = []
 htmlhelp_basename = 'flask_saml2_doc'
 
